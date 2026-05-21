@@ -187,7 +187,7 @@ const supabase = window.supabase.createClient(
 );
 
 let user = null;
-
+let predictions = {}
 /* ✅ AUTH */
 window.register = async function () {
   const email = document.getElementById("email").value;
