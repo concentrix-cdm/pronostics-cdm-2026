@@ -187,6 +187,7 @@ const supabase = window.supabase.createClient(
 );
 
 let user = null;
+let predictions = {}
 
 /* ✅ AUTH */
 window.register = async function () {
@@ -219,7 +220,7 @@ window.logout = function () {
   location.reload();
 };
 
-function start() {
+ async function start() {
   document.getElementById("auth").style.display = "none";
   document.getElementById("app").style.display = "block";
 
@@ -231,12 +232,30 @@ function start() {
     loadAdmin();
   }
 
-  loadMatches();
-  loadClassement();
+
 
   setInterval(loadClassement, 5000);
 }
 
+await loadPredictions(); ✅
+loadMatches();
+loadClassement();
+  
+async function loadPredictions() {
+  const { data } = await supabase
+    .from("predictions")
+    .select("*")
+    .eq("user_id", user.id);
+
+  predictions = {};
+
+  data.forEach(p => {
+    predictions[p.match_id] = p;
+  });
+}
+
+
+  
 /* ✅ MATCHS */
 async function loadMatches() {
   const { data } = await supabase
