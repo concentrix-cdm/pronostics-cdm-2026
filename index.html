@@ -287,19 +287,29 @@ async function loadMatches() {
     const now = new Date();
     const start = new Date(m.start_time);
 
-    let html = `<div class="card">
-      <b>${m.team_a} vs ${m.team_b}</b><br>
-      ${new Date(m.start_time).toLocaleString()}<br>`;
+let html = `<div class="card">
+  <b>${m.team_a} vs ${m.team_b}</b><br>
+  ${new Date(m.start_time).toLocaleString()}<br>`;
 
-    if (now >= start) {
-      html += `<span style="color:red;">🔒 Match fermé</span>`;
-    } else {
-      html += `
-        <input id="a${m.id}" type="number">
-        <input id="b${m.id}" type="number">
-        <button onclick="savePred(${m.id})">Valider</button>
-      `;
-    }
+// ✅ 👉 AJOUT ICI
+if (predictions[m.id]) {
+  html += `
+    <div style="color:green; margin:5px 0;">
+      ✅ Ton pari : ${predictions[m.id].pred_score_a} - ${predictions[m.id].pred_score_b}
+    </div>
+  `;
+}
+
+// ✅ ton code existant ensuite
+if (now >= start) {
+  html += `<span style="color:red;">🔒 Match fermé</span>`;
+} else {
+  html += `
+    <input id="a${m.id}" type="number" value="${predictions[m.id]?.pred_score_a ?? ''}">
+    <input id="b${m.id}" type="number" value="${predictions[m.id]?.pred_score_b ?? ''}">
+    <button onclick="savePred(${m.id})">Valider</button>
+  `;
+}
 
     html += `</div>`;
     container.innerHTML += html;
