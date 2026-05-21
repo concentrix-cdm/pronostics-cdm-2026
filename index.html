@@ -2,254 +2,381 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Pronostics CDM 2026</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+
+<header>
+  <div class="logo">
+  <div>Pronostics Coupe du Monde 2026 ⚽</div>
+</header>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 
 <style>
 body {
-  font-family: Arial;
-  background:#f4f6fb;
-  margin:0;
+  margin: 0;
+  font-family: 'Segoe UI', Arial;
+  background: #f4f6fb;
 }
 
-header{
-  background: linear-gradient(90deg,#0a2a66,#6e2cff);
-  color:white;
-  padding:15px;
-  text-align:center;
-  font-size:18px;
+/* HEADER */
+header {
+  background: linear-gradient(90deg, #0a2a66, #6e2cff);
+  color: white;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
-.card{
-  background:white;
-  padding:15px;
-  margin-bottom:15px;
-  border-radius:8px;
+.dot {
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
-input{
-  width:60px;
-  padding:5px;
-  margin:5px;
+/* LOGIN PAGE */
+.auth-card {
+  max-width: 400px;
+  margin: 100px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  text-align: center;
 }
 
-button{
-  background:#6e2cff;
-  color:white;
-  border:none;
-  padding:6px 10px;
-  border-radius:5px;
-  cursor:pointer;
+/* MAIN */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
 }
 
-button:hover{
-  background:#4d1fd1;
+/* CARDS */
+.card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.pari{
-  background:#e8f5e9;
-  padding:6px;
-  border-radius:6px;
-  margin-top:5px;
+.match {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* INPUTS */
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* BUTTON */
+button {
+  background: #6e2cff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #5120c7;
+}
+
+/* ADMIN */
+.admin {
+  background: #ffe6eb;
+}
+
+/* PODIUM */
+.top1 {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.top2 {
+  font-weight: bold;
+}
+
+.top3 {
+  font-weight: bold;
 }
 </style>
+
 </head>
 
 <body>
 
-<header>⚽ Pronostics Coupe du Monde 2026</header>
-
 <div class="container">
 
-<!-- LOGIN -->
-<div id="auth" class="card">
-<h3>Connexion</h3>
+<div id="auth" class="auth-card">
 
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Mot de passe"><br><br>
+  <h2>Connexion</h2>
 
-<button onclick="login()">Connexion</button>
-<button onclick="register()">Créer compte</button>
+  <input id="email" placeholder="Email"><br><br>
+  <input id="password" type="password" placeholder="Mot de passe"><br><br>
+
+  <button onclick="login()">Se connecter</button><br><br>
+  <button onclick="register()">Créer un compte</button>
+
+  <!-- ✅ LOGO EN BAS -->
+  <div style="margin-top:40px; text-align:center;">
+    <img src="logo-concentrix.png" 
+         alt="Concentrix"
+         style="height:50px;">
+  </div>
 
 </div>
+``
 
-<!-- APP -->
 <div id="app" style="display:none;">
 
 <div class="card">
-<div id="welcome"></div>
-<button onclick="logout()">Déconnexion</button>
+  <span id="welcome"></span>
+  <button onclick="logout()">Déconnexion</button>
 </div>
 
 <div class="card">
-<h3>Matchs</h3>
-<div id="matches"></div>
+  <h3>⚽ Matchs</h3>
+  <div id="matches"></div>
+</div>
+
+<div class="card">
+  <h3>🏆 Classement LIVE</h3>
+  <div id="classement"></div>
+</div>
+
+
+<div class="card admin" id="adminSection" style="display:none;">
+  <h3>🛠️ Mode Admin (Résultats)</h3>
+  <div id="admin"></div>
+</div>
+
+
 </div>
 
 </div>
 
-</div>
+<script defer>
 
-<script>
+window.onload = function () {
 
-const supabaseClient = supabase.createClient(
+const supabase = window.supabase.createClient(
   "https://afgihkxtoeycgomnbjil.supabase.co",
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmZ2loa3h0b2V5Y2dvbW5iamlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNjc4NzgsImV4cCI6MjA5NDg0Mzg3OH0.veCV8TDI6ZVsvt-soSZoJEaKPe2NHoPt9s1NSQ0YVBo"
 );
 
 let user = null;
-let predictions = {};
 
-// AUTH
-async function login(){
+/* ✅ AUTH */
+window.register = async function () {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { data } = await supabaseClient.auth.signInWithPassword({email,password});
-  user = data.user;
-  start();
-}
+  const { error } = await supabase.auth.signUp({ email, password });
 
-async function register(){
+  if (error) alert(error.message);
+  else alert("Compte créé ✅");
+};
+
+window.login = async function () {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  await supabaseClient.auth.signUp({email,password});
-  alert("Compte créé ✅");
-}
-
-function logout(){
-  supabaseClient.auth.signOut();
-  location.reload();
-}
-
-// START
-async function start(){
-  document.getElementById("auth").style.display = "none";
-  document.getElementById("app").style.display = "block";
-
-  document.getElementById("welcome").innerText = user.email;
-
-  await loadPredictions();
-  loadMatches();
-}
-
-// LOAD PREDICTIONS
-async function loadPredictions(){
-  const { data } = await supabaseClient
-    .from("predictions")
-    .select("*")
-    .eq("user_id", user.id);
-
-  predictions = {};
-
-  data.forEach(p=>{
-    predictions[p.match_id] = p;
-  });
-}
-
-// LOAD MATCHES (TRI PAR BASE ✅)
-async function loadMatches(){
-
-  const { data } = await supabaseClient
-    .from("matches")
-    .select("*")
-    .order("start_time", { ascending:true });
-
-  let html = "";
-
-  data.forEach(m=>{
-
-    const now = new Date();
-    const start = new Date(m.start_time);
-
-    html += `<div class="card">`;
-
-    html += `<b>${m.team_a} vs ${m.team_b}</b><br>`;
-    html += `${start.toLocaleString()}<br>`;
-
-    // ✅ affichage ancien pari
-    if(predictions[m.id]){
-      html += `
-      <div class="pari">
-        ✅ Ton pari : ${predictions[m.id].pred_score_a} - ${predictions[m.id].pred_score_b}
-      </div>`;
-    }
-
-    // ✅ si match pas commencé → saisie possible
-    if(now < start){
-
-      html += `
-        <input id="a${m.id}" type="number"
-        value="${predictions[m.id]?.pred_score_a ?? ''}">
-        
-        <input id="b${m.id}" type="number"
-        value="${predictions[m.id]?.pred_score_b ?? ''}">
-        
-        <button onclick="savePred(${m.id})">Valider</button>
-      `;
-    } 
-    else {
-      html += `<span style="color:red;">🔒 Match fermé</span>`;
-    }
-
-    html += `</div>`;
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,password
   });
 
-  document.getElementById("matches").innerHTML = html;
-}
-
-// SAVE PREDICTION
-async function savePred(id){
-
-  const a = document.getElementById("a"+id).value;
-  const b = document.getElementById("b"+id).value;
-
-  // récupérer date match
-  const { data } = await supabaseClient
-    .from("matches")
-    .select("start_time")
-    .eq("id", id)
-    .single();
-
-  const now = new Date();
-  const start = new Date(data.start_time);
-
-  if(now >= start){
-    alert("❌ Match commencé !");
-    return;
-  }
-
-  await supabaseClient.from("predictions").upsert(
-    {
-      user_id: user.id,
-      match_id: id,
-      pred_score_a: Number(a),
-      pred_score_b: Number(b)
-    },
-    {
-      onConflict: ["user_id","match_id"] // ✅ IMPORTANT
-    }
-  );
-
-  await loadPredictions();
-  loadMatches();
-}
-
-// AUTO LOGIN
-supabaseClient.auth.getUser().then(({data})=>{
-  if(data.user){
+  if (error) alert(error.message);
+  else {
     user = data.user;
     start();
   }
+};
+
+window.logout = function () {
+  supabase.auth.signOut();
+  location.reload();
+};
+
+function start() {
+  document.getElementById("auth").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  document.getElementById("welcome").innerText = "Bienvenue " + user.email;
+
+  // ✅ SECURISATION ADMIN
+  if (user.email === "ludovic.audureau@concentrix.com") {
+    document.getElementById("adminSection").style.display = "block";
+    loadAdmin();
+  }
+
+  loadMatches();
+  loadClassement();
+
+  setInterval(loadClassement, 5000);
+}
+
+/* ✅ MATCHS */
+async function loadMatches() {
+  const { data } = await supabase
+    .from("matches")
+    .select("*");
+
+  // ✅ TRI MANUEL PAR DATE
+  
+  data.sort((a, b) => {
+  return new Date(a.start_time).getTime() - new Date(b.start_time).getTime();
+  })
+
+
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
+
+  data.forEach(m => {
+    const now = new Date();
+    const start = new Date(m.start_time);
+
+    let html = `<div class="card">
+      <b>${m.team_a} vs ${m.team_b}</b><br>
+      ${new Date(m.start_time).toLocaleString()}<br>`;
+
+    if (now >= start) {
+      html += `<span style="color:red;">🔒 Match fermé</span>`;
+    } else {
+      html += `
+        <input id="a${m.id}" type="number">
+        <input id="b${m.id}" type="number">
+        <button onclick="savePred(${m.id})">Valider</button>
+      `;
+    }
+
+    html += `</div>`;
+    container.innerHTML += html;
+  });
+}
+
+window.savePred = async function(id){
+  const a = document.getElementById("a"+id).value;
+  const b = document.getElementById("b"+id).value;
+
+  await supabase.from("predictions").upsert({
+    user_id: user.id,
+    match_id: id,
+    pred_score_a: Number(a),
+    pred_score_b: Number(b)
+  });
+
+  alert("Pronostic enregistré ✅");
+};
+
+/* ✅ ADMIN */
+async function loadAdmin() {
+  const { data } = await supabase.from("matches").select("*");
+
+  const container = document.getElementById("admin");
+  container.innerHTML = "";
+
+  data.forEach(m => {
+    container.innerHTML += `
+      <div>
+        ${m.team_a} vs ${m.team_b}
+        <input id="ra${m.id}" type="number" value="${m.score_a ?? ""}">
+        <input id="rb${m.id}" type="number" value="${m.score_b ?? ""}">
+        <button onclick="saveResult(${m.id})">OK</button>
+      </div>
+    `;
+  });
+}
+
+window.saveResult = async function(id){
+  const a = document.getElementById("ra"+id).value;
+  const b = document.getElementById("rb"+id).value;
+
+  await supabase.from("matches").update({
+    score_a:a,
+    score_b:b,
+    status:'finished'
+  }).eq("id",id);
+
+  alert("Score enregistré ✅");
+};
+
+/* ✅ CLASSEMENT */
+async function loadClassement() {
+  const { data, error } = await supabase.rpc("classement");
+
+  console.log("CLASSEMENT DATA:", data);
+  console.log("CLASSEMENT ERROR:", error);
+
+  const container = document.getElementById("classement");
+  container.innerHTML = "";
+
+  if (error) {
+    container.innerHTML = "❌ Erreur chargement classement";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "⚠️ Aucun résultat pour le moment";
+    return;
+  }
+
+ 
+data.forEach((row, i) => {
+
+  let style = "";
+  let medal = "";
+
+  if (i === 0) {
+    style = "top1";
+    medal = "🥇";
+  } else if (i === 1) {
+    style = "top2";
+    medal = "🥈";
+  } else if (i === 2) {
+    style = "top3";
+    medal = "🥉";
+  }
+
+  container.innerHTML += `
+    <div class="${style}">
+      ${medal} ${i+1}. ${user.email} — ${row.score} pts
+    </div>
+  `;
 });
+
+}
+
+/* ✅ AUTO LOGIN */
+supabase.auth.getUser().then(({data})=>{
+  if(data.user){
+    user=data.user;
+    start();
+  }
+});
+
+};
 
 </script>
 
