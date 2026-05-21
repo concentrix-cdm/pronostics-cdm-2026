@@ -255,6 +255,16 @@ async function loadMatches() {
       <b>${m.team_a} vs ${m.team_b}</b><br>
       ${new Date(m.start_time).toLocaleString()}<br>`;
 
+    // ✅ afficher ancien pari
+if (predictions[m.id]) {
+  html += `
+    <div style="color:green; margin:5px 0;">
+      ✅ Ton pari : ${predictions[m.id].pred_score_a} - ${predictions[m.id].pred_score_b}
+    </div>
+  `;
+}
+``
+
     if (now >= start) {
       html += `<span style="color:red;">🔒 Match fermé</span>`;
     } else {
