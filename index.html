@@ -75,13 +75,20 @@ header {
 }
 
 /* CARDS */
+
 .card {
   background: white;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.15s;
 }
+
+.card:hover {
+  transform: scale(1.02);
+}
+
 
 .match {
   display: flex;
@@ -90,15 +97,39 @@ header {
 }
 
 
-
-.match-title {
-  font-size: 24px; ✅
-  font-weight: bold;
-  text-align: center; ✅
-  margin: 10px 0; ✅
+.match-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 
+
+.match-title {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #0a2a66;
+}
+
+
+.match-closed {
+  text-align: center;
+  color: white;
+  background: #ff4d4d;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+.match-date {.match text-align: center;
+  font-size: 14px;
+  color: #666;
+}
 
 
   
@@ -318,8 +349,10 @@ let html = `<div class="card">
   ${m.team_a} vs ${m.team_b}
 </div>
 
-  ${new Date(m.start_time).toLocaleString()}<br>`;
-
+  <div class="match-date">
+  ${new Date(m.start_time).toLocaleDateString()} - ${new Date(m.start_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+  </div>
+                                                     
 // ✅ 👉 AJOUT ICI
 if (predictions[m.id]) {
   html += `
@@ -350,12 +383,14 @@ if (m.score_a !== null && m.score_b !== null) {
     
 // ✅ ton code existant ensuite
 if (now >= start) {
-  html += `<span style="color:red;">🔒 Match terminé</span>`;
+ html += `<div class="match-closed">🔒 Match terminé</div>`;
 } else {
   html += `
+    <div class="match-actions">
     <input id="a${m.id}" type="number" value="${predictions[m.id]?.pred_score_a ?? ''}">
     <input id="b${m.id}" type="number" value="${predictions[m.id]?.pred_score_b ?? ''}">
     <button onclick="savePred(${m.id})">Valider</button>
+    </div>
   `;
 }
 
