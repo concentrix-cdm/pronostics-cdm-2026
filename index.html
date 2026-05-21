@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 
-<header>⚽ Pronostics Coupe du Monde 2026</header>
+
+<header>
+  <span class="ballon">⚽</span>
+  <span class="title">Pronostics Coupe du Monde 2026</span>
+</header>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 
@@ -19,12 +24,20 @@ body {
 header {
   background: linear-gradient(90deg, #0a2a66, #6e2cff);
   color: white;
-  padding: 30px 15px;
+  padding: 25px;
   text-align: center;
-  font-size: 32px;
-  font-weight: 600;
-  letter-spacing: 1px;
 }
+
+.ballon {
+  font-size: 40px; ✅
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: bold;
+}
+
 
 
 .logo {
