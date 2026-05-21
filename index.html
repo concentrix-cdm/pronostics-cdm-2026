@@ -96,11 +96,14 @@ header {
 .match-actions {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
+ }
 
+
+.match-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 
 .match-title {
@@ -123,11 +126,14 @@ header {
 
 
 
+
 .match-date {
   text-align: center;
   font-size: 14px;
   color: #666;
+  margin: 10px 0; 
 }
+
 
 
 
@@ -349,6 +355,7 @@ async function loadMatches() {
 
 
 let html = `<div class="card">
+<div class="match-block">
 <div class="match-title">
   ${m.team_a} vs ${m.team_b}
 </div>
