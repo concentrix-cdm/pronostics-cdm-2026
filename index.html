@@ -232,28 +232,8 @@ window.logout = function () {
     loadAdmin();
   }
 
-
-
   setInterval(loadClassement, 5000);
 }
-
-await loadPredictions(); ✅
-loadMatches();
-loadClassement();
-  
-async function loadPredictions() {
-  const { data } = await supabase
-    .from("predictions")
-    .select("*")
-    .eq("user_id", user.id);
-
-  predictions = {};
-
-  data.forEach(p => {
-    predictions[p.match_id] = p;
-  });
-}
-
 
   
 /* ✅ MATCHS */
