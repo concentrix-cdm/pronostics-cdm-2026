@@ -350,7 +350,7 @@ if (m.score_a !== null && m.score_b !== null) {
     
 // ✅ ton code existant ensuite
 if (now >= start) {
-  html += `<span style="color:red;">🔒 Match fermé</span>`;
+  html += `<span style="color:red;">🔒 Match terminé</span>`;
 } else {
   html += `
     <input id="a${m.id}" type="number" value="${predictions[m.id]?.pred_score_a ?? ''}">
