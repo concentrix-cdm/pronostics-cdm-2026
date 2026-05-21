@@ -277,8 +277,25 @@ async function loadMatches() {
 }
 
 window.savePred = async function(id){
+
   const a = document.getElementById("a"+id).value;
   const b = document.getElementById("b"+id).value;
+
+  // ✅ récupérer le match
+  const { data } = await supabase
+    .from("matches")
+    .select("start_time")
+    .eq("id", id)
+    .single();
+
+  const now = new Date();
+  const start = new Date(data.start_time);
+
+  // ✅ bloquer après début
+  if(now >= start){
+    alert("❌ Match déjà commencé, pari bloqué !");
+    return;
+  }
 
   await supabase.from("predictions").upsert({
     user_id: user.id,
@@ -287,7 +304,7 @@ window.savePred = async function(id){
     pred_score_b: Number(b)
   });
 
-  alert("Pronostic enregistré ✅");
+  alert("✅ Pronostic enregistré");
 };
 
 /* ✅ ADMIN */
