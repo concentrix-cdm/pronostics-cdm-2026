@@ -19,11 +19,47 @@ body {
 /* HEADER */
 
 header {
+  display: grid; ✅
+  grid-template-columns: 1fr auto 1fr; ✅
+  align-items: center;
+
   background: linear-gradient(90deg, #0a2a66, #6e2cff);
   color: white;
-  padding: 25px;
+  padding: 15px 20px;
+}
+
+/* gauche */
+.header-left {
+  justify-self: start;
+}
+
+/* centre */
+.header-center {
   text-align: center;
 }
+
+/* droite */
+.header-right {
+  justify-self: end;
+}
+
+/* logos */
+.logo-header {
+  height: 30px;
+}
+
+/* titre */
+.title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* ballon */
+.ballon {
+  font-size: 26px;
+  margin: 0 5px;
+}
+
 
 .ballon {
   font-size: 60px;
