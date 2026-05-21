@@ -241,13 +241,10 @@ async function loadMatches() {
     .from("matches")
     .select("*");
 
-  
-  // ✅ TRI MANUEL PAR DATE
-  
+  // ✅ TRI CORRIGÉ
   data.sort((a, b) => {
-  return new Date(a.start_time).getTime() - new Date(b.start_time).getTime();
-  })
-
+    return new Date(a.start_time).getTime() - new Date(b.start_time).getTime();
+  });
 
   const container = document.getElementById("matches");
   container.innerHTML = "";
