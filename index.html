@@ -213,12 +213,17 @@ window.login = async function () {
     start();
   }
 };
-  window.logout = async function () {
-  supabase.auth.signOut(); ✅
-  location.reload();
-};
+  
+
+window.logout = async function () {
+  await supabase.auth.signOut();
+  document.getElementById("app").style.display = "none";
+  document.getElementById("auth").style.display = "block";
+
 
 };
+
+
 
 async function start() {
   document.getElementById("auth").style.display = "none";
