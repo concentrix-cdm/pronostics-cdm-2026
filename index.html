@@ -231,6 +231,7 @@ async function start() {
   }
 
   // ✅ ICI TU CHARGES TES DONNÉES
+  await loadPredictions()
   loadMatches();
   loadClassement();
 
@@ -238,6 +239,29 @@ async function start() {
   setInterval(loadClassement, 5000);
 }
 
+async function loadPredictions() {
+  const { data, error } = await supabase
+    .from("predictions")
+    .select("*")
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  predictions = {};
+
+  data.forEach(p => {
+    predictions[p.match_id] = p;
+  });
+}
+
+
+
+
+
+  
 /* ✅ MATCHS */
 
 async function loadMatches() {
