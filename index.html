@@ -222,13 +222,8 @@ window.logout = function () {
 function start() {
   document.getElementById("auth").style.display = "none";
   document.getElementById("app").style.display = "block";
-
   document.getElementById("welcome").innerText = "Bienvenue " + user.email;
-// await loadPredictions();
- // loadMatches();
   
-
-
   // ✅ SECURISATION ADMIN
   if (user.email === "ludovic.audureau@concentrix.com") {
     document.getElementById("adminSection").style.display = "block";
