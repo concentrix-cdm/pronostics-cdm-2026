@@ -214,9 +214,12 @@ window.login = async function () {
   }
 };
 
-window.logout = function () {
-  supabase.auth.signOut();
+
+  window.logout = async function () {
+  await supabase.auth.signOut(); ✅
   location.reload();
+};
+
 };
 
 async function start() {
