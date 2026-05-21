@@ -241,15 +241,6 @@ async function loadMatches() {
     .from("matches")
     .select("*");
 
-if (predictions && predictions[m.id]) {
-  html += `
-    <div style="color:green;">
-      ✅ Ton pari : ${predictions[m.id].pred_score_a} - ${predictions[m.id].pred_score_b}
-    </div>
-  `;
-}
-
-
   
   // ✅ TRI MANUEL PAR DATE
   
