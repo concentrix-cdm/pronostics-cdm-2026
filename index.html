@@ -304,9 +304,16 @@ if (predictions[m.id]) {
 // ✅ 👉 AJOUT ICI (score officiel)
 if (m.score_a !== null && m.score_b !== null) {
   html += `
-    <div style="margin:5px 0; font-weight:bold;">
-      ⚽ Score final : ${m.score_a} - ${m.score_b}
-    </div>
+
+<div style="
+  background:#fff3cd;
+  padding:6px;
+  border-radius:6px;
+  font-weight:bold;
+">
+  ⚽ Score final : ${m.score_a} - ${m.score_b}
+</div>
+
   `;
 }
 
