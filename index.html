@@ -300,6 +300,18 @@ if (predictions[m.id]) {
   `;
 }
 
+
+// ✅ 👉 AJOUT ICI (score officiel)
+if (m.score_a !== null && m.score_b !== null) {
+  html += `
+    <div style="margin:5px 0; font-weight:bold;">
+      ⚽ Score final : ${m.score_a} - ${m.score_b}
+    </div>
+  `;
+}
+
+
+    
 // ✅ ton code existant ensuite
 if (now >= start) {
   html += `<span style="color:red;">🔒 Match fermé</span>`;
