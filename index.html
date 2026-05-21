@@ -172,3 +172,86 @@ async function loadMatches(){
 
     html += `<div class="card">`;
 
+    html += `<b>${m.team_a} vs ${m.team_b}</b><br>`;
+    html += `${start.toLocaleString()}<br>`;
+
+    // ✅ affichage ancien pari
+    if(predictions[m.id]){
+      html += `
+      <div class="pari">
+        ✅ Ton pari : ${predictions[m.id].pred_score_a} - ${predictions[m.id].pred_score_b}
+      </div>`;
+    }
+
+    // ✅ si match pas commencé → saisie possible
+    if(now < start){
+
+      html += `
+        <input id="a${m.id}" type="number"
+        value="${predictions[m.id]?.pred_score_a ?? ''}">
+        
+        <input id="b${m.id}" type="number"
+        value="${predictions[m.id]?.pred_score_b ?? ''}">
+        
+        <button onclick="savePred(${m.id})">Valider</button>
+      `;
+    } 
+    else {
+      html += `<span style="color:red;">🔒 Match fermé</span>`;
+    }
+
+    html += `</div>`;
+  });
+
+  document.getElementById("matches").innerHTML = html;
+}
+
+// SAVE PREDICTION
+async function savePred(id){
+
+  const a = document.getElementById("a"+id).value;
+  const b = document.getElementById("b"+id).value;
+
+  // récupérer date match
+  const { data } = await supabaseClient
+    .from("matches")
+    .select("start_time")
+    .eq("id", id)
+    .single();
+
+  const now = new Date();
+  const start = new Date(data.start_time);
+
+  if(now >= start){
+    alert("❌ Match commencé !");
+    return;
+  }
+
+  await supabaseClient.from("predictions").upsert(
+    {
+      user_id: user.id,
+      match_id: id,
+      pred_score_a: Number(a),
+      pred_score_b: Number(b)
+    },
+    {
+      onConflict: ["user_id","match_id"] // ✅ IMPORTANT
+    }
+  );
+
+  await loadPredictions();
+  loadMatches();
+}
+
+// AUTO LOGIN
+supabaseClient.auth.getUser().then(({data})=>{
+  if(data.user){
+    user = data.user;
+    start();
+  }
+});
+
+</script>
+
+</body>
+</html>
