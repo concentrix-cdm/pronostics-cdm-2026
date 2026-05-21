@@ -216,7 +216,7 @@ window.login = async function () {
 
 
   window.logout = async function () {
-  await supabase.auth.signOut(); ✅
+  supabase.auth.signOut(); ✅
   location.reload();
 };
 
