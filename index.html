@@ -226,6 +226,9 @@ function start() {
   document.getElementById("welcome").innerText = "Bienvenue " + user.email;
 await loadPredictions();
   loadMatches();
+  
+console.log("AVANT MATCHES ✅"); // ✅ TEST
+
   // ✅ SECURISATION ADMIN
   if (user.email === "ludovic.audureau@concentrix.com") {
     document.getElementById("adminSection").style.display = "block";
