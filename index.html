@@ -489,15 +489,17 @@ window.savePred = async function(id){
   }
 
   // ✅ UPSERT = remplace le pari existant
+
 await supabase.from("predictions").upsert(
   {
     user_id: user.id,
+    email: user.email, ✅
     match_id: id,
     pred_score_a: Number(a),
     pred_score_b: Number(b)
   },
   {
-    onConflict: ["user_id", "match_id"] // ✅ TRÈS IMPORTANT
+    onConflict: ["user_id", "match_id"]
   }
 );
 
