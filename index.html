@@ -16,6 +16,27 @@ body {
   background: #f4f6fb;
 }
 
+/* ✅ layout global */
+.layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 20px;
+}
+
+/* ✅ colonne gauche */
+.sidebar {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
+
+/* ✅ colonne droite */
+.content {
+  width: 100%;
+}
+
+
+  
 /* HEADER */
 
 header {
@@ -259,34 +280,72 @@ button:hover {
 
 </div>
 
+<div id="app">
 
-<div id="app" style="display:none;">
+  <div class="layout">
 
-<div class="card">
-  <span id="welcome"></span>
-  <button onclick="logout()">Déconnexion</button>
+    <!-- ✅ COLONNE GAUCHE : CLASSEMENT -->
+    <div class="sidebar">
+      <div class="card">
+        <h3>🏆 Classement LIVE</h3>
+        <div id="classement"></div>
+      </div>
+    </div>
+
+    <!-- ✅ COLONNE DROITE : MATCHS -->
+    <div class="content">
+      <div class="card">
+        <span id="welcome"></span>
+        <button onclick="logout()">Déconnexion</button>
+      </div>
+
+      <div class="card">
+        <h3>⚽ Matchs</h3>
+        <div id="matches"></div>
+      </div>
+
+      <div class="card admin" id="adminSection" style="display:none;">
+        <h3>🛠️ Mode Admin</h3>
+        <div id="admin"></div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="card">
-  <h3>⚽ Matchs</h3>
-  <div id="matches"></div>
-</div>
-
-<div class="card">
-  <h3>🏆 Classement LIVE</h3>
-  <div id="classement"></div>
-</div>
 
 
-<div class="card admin" id="adminSection" style="display:none;">
-  <h3>🛠️ Mode Admin (Résultats)</h3>
-  <div id="admin"></div>
-</div>
 
 
-</div>
+  
+//<div id="app" style="display:none;">
 
-</div>
+//<div class="card">
+//  <span id="welcome"></span>
+//  <button onclick="logout()">Déconnexion</button>
+//</div>
+
+//<div class="card">
+//  <h3>⚽ Matchs</h3>
+//  <div id="matches"></div>
+//</div>
+
+//<div class="card">
+//  <h3>🏆 Classement LIVE</h3>
+//  <div id="classement"></div>
+//</div>
+
+
+//<div class="card admin" id="adminSection" style="display:none;">
+//  <h3>🛠️ Mode Admin (Résultats)</h3>
+//  <div id="admin"></div>
+//</div>
+
+
+//</div>
+
+//</div>
 
 <script defer>
 
