@@ -493,7 +493,7 @@ window.savePred = async function(id){
 await supabase.from("predictions").upsert(
   {
     user_id: user.id,
-    email: user.email, ✅
+    email: user.email,
     match_id: id,
     pred_score_a: Number(a),
     pred_score_b: Number(b)
