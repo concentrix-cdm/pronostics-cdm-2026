@@ -28,7 +28,6 @@ body {
   gap: 30px; 
 }
 
-
 .sidebar {
   position: sticky;
   top: 20px;
@@ -41,9 +40,9 @@ body {
 
 
 .sidebar h3 {
-  text-align: center; ✅
-  text-decoration: underline; ✅
-  margin-bottom: 15px; ✅
+  text-align: center; 
+  text-decoration: underline; 
+  margin-bottom: 15px; 
 }
 
 
@@ -51,10 +50,9 @@ body {
 /* HEADER */
 
 header {
-  display: grid; ✅
-  grid-template-columns: 1fr auto 1fr; ✅
+  display: grid; 
+  grid-template-columns: 1fr auto 1fr; 
   align-items: center;
-
   background: linear-gradient(90deg, #0a2a66, #6e2cff);
   color: white;
   padding: 15px 20px;
@@ -325,39 +323,6 @@ button:hover {
 
 </div>
 
-
-
-
-
-  
-//<div id="app" style="display:none;">
-
-//<div class="card">
-//  <span id="welcome"></span>
-//  <button onclick="logout()">Déconnexion</button>
-//</div>
-
-//<div class="card">
-//  <h3>⚽ Matchs</h3>
-//  <div id="matches"></div>
-//</div>
-
-//<div class="card">
-//  <h3>🏆 Classement LIVE</h3>
-//  <div id="classement"></div>
-//</div>
-
-
-//<div class="card admin" id="adminSection" style="display:none;">
-//  <h3>🛠️ Mode Admin (Résultats)</h3>
-//  <div id="admin"></div>
-//</div>
-
-
-//</div>
-
-//</div>
-
 <script defer>
 
 window.onload = function () {
@@ -485,10 +450,6 @@ let html = `<div class="card">
   ${new Date(m.start_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
   </div>
 `;
-
-//if (predictions[m.id]) {
-//  html += `...`;
-//}
 
                                                      
 // ✅ 👉 AJOUT ICI
