@@ -447,6 +447,40 @@ if (m.score_a !== null && m.score_b !== null) {
   `;
 }
 
+// ✅ 👉 AJOUT ICI : calcul des points
+if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
+
+  let points = 0;
+
+  const pa = predictions[m.id].pred_score_a;
+  const pb = predictions[m.id].pred_score_b;
+
+  const sa = m.score_a;
+  const sb = m.score_b;
+
+  // score exact
+  if (pa === sa && pb === sb) {
+    points = 3;
+  }
+  // bon résultat
+  else if ((pa - pb) === (sa - sb)) {
+    points = 1;
+  }
+
+  let label = "";
+  if (points === 3) label = "🎯 Score exact";
+  else if (points === 1) label = "✅ Bon résultat";
+  else label = "❌ Raté";
+
+  html += `
+    <div style="
+      margin-top:5px;
+      font-weight:bold;
+    ">
+      ${label} — +${points} pt${points > 1 ? 's' : ''}
+    </div>
+  `;
+}
 
     
 // ✅ ton code existant ensuite
