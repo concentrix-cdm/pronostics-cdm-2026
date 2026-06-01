@@ -483,40 +483,35 @@ if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
 
 let points = 0;
 
-// ✅ sécurisation complète
+// ✅ conversion propre
 const pa = parseInt(predictions[m.id].pred_score_a);
 const pb = parseInt(predictions[m.id].pred_score_b);
 
 const sa = parseInt(m.score_a);
 const sb = parseInt(m.score_b);
 
-// ✅ vérifier si valeurs valides
-if (!isNaN(pa) && !isNaN(pb) && !isNaN(sa) && !isNaN(sb)) {
-
-  // ✅ fonction résultat
-  const getResult = (a, b) => {
-    if (a > b) return "A";
-    if (a < b) return "B";
-    return "N";
-  };
-
-  const resultPari = getResult(pa, pb);
-  const resultScore = getResult(sa, sb);
-
-  // ✅ DEBUG
-  console.log("PARI:", pa, pb, resultPari);
-  console.log("SCORE:", sa, sb, resultScore);
-
-  // ✅ score exact
-  if (pa === sa && pb === sb) {
-    points = 3;
-  }
-  // ✅ bon résultat
-  else if (resultPari === resultScore) {
-    points = 1;
-  }
+// ✅ stop si données invalides
+if (isNaN(pa) || isNaN(pb) || isNaN(sa) || isNaN(sb)) {
+  console.log("Erreur données:", pa, pb, sa, sb);
+  return;
 }
 
+// ✅ déterminer gagnant
+const resultPari = pa > pb ? "A" : pa < pb ? "B" : "N";
+const resultScore = sa > sb ? "A" : sa < sb ? "B" : "N";
+
+// ✅ DEBUG (important)
+console.log("PARI:", pa, pb, resultPari);
+console.log("SCORE:", sa, sb, resultScore);
+
+// ✅ score exact
+if (pa === sa && pb === sb) {
+  points = 3;
+}
+// ✅ bon résultat
+else if (resultPari === resultScore) {
+  points = 1;
+}
 
   let label = "";
   if (points === 3) label = "🎯 Score exact";
