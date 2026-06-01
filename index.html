@@ -493,10 +493,16 @@ if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
   if (pa === sa && pb === sb) {
     points = 3;
   }
-  // bon résultat
-  else if ((pa - pb) === (sa - sb)) {
-    points = 1;
-  }
+
+// ✅ bon résultat (gagnant / nul)
+else if (
+  (pa > pb && sa > sb) ||    // victoire A
+  (pa < pb && sa < sb) ||    // victoire B
+  (pa === pb && sa === sb)   // match nul
+) {
+  points = 1;
+}
+
 
   let label = "";
   if (points === 3) label = "🎯 Score exact";
