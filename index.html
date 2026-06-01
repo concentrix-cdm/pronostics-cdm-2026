@@ -481,7 +481,7 @@ if (m.score_a !== null && m.score_b !== null) {
 // ✅ 👉 AJOUT ICI : calcul des points
 if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
 
- let points = 0;
+let points = 0;
 
 const pa = Number(predictions[m.id].pred_score_a);
 const pb = Number(predictions[m.id].pred_score_b);
@@ -489,19 +489,26 @@ const pb = Number(predictions[m.id].pred_score_b);
 const sa = Number(m.score_a);
 const sb = Number(m.score_b);
 
-// ✅ DEBUG
-console.log("PARI :", pa, pb, "| SCORE :", sa, sb);
+// ✅ fonction pour déterminer le résultat du match
+function getResult(a, b) {
+  if (a > b) return "A";      // équipe A gagne
+  if (a < b) return "B";      // équipe B gagne
+  return "N";                 // nul
+}
+
+const resultPari = getResult(pa, pb);
+const resultScore = getResult(sa, sb);
+
+// ✅ DEBUG (important)
+console.log("PARI:", pa, pb, resultPari);
+console.log("SCORE:", sa, sb, resultScore);
 
 // ✅ score exact
 if (pa === sa && pb === sb) {
   points = 3;
 }
 // ✅ bon résultat
-else if (
-  (pa > pb && sa > sb) ||   // victoire A
-  (pa < pb && sa < sb) ||   // victoire B
-  (pa === pb && sa === sb)  // nul
-) {
+else if (resultPari === resultScore) {
   points = 1;
 }
 
