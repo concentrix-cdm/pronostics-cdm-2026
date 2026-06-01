@@ -483,33 +483,38 @@ if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
 
 let points = 0;
 
-const pa = Number(predictions[m.id].pred_score_a);
-const pb = Number(predictions[m.id].pred_score_b);
+// ✅ sécurisation complète
+const pa = parseInt(predictions[m.id].pred_score_a);
+const pb = parseInt(predictions[m.id].pred_score_b);
 
-const sa = Number(m.score_a);
-const sb = Number(m.score_b);
+const sa = parseInt(m.score_a);
+const sb = parseInt(m.score_b);
 
-// ✅ fonction pour déterminer le résultat du match
-function getResult(a, b) {
-  if (a > b) return "A";      // équipe A gagne
-  if (a < b) return "B";      // équipe B gagne
-  return "N";                 // nul
-}
+// ✅ vérifier si valeurs valides
+if (!isNaN(pa) && !isNaN(pb) && !isNaN(sa) && !isNaN(sb)) {
 
-const resultPari = getResult(pa, pb);
-const resultScore = getResult(sa, sb);
+  // ✅ fonction résultat
+  const getResult = (a, b) => {
+    if (a > b) return "A";
+    if (a < b) return "B";
+    return "N";
+  };
 
-// ✅ DEBUG (important)
-console.log("PARI:", pa, pb, resultPari);
-console.log("SCORE:", sa, sb, resultScore);
+  const resultPari = getResult(pa, pb);
+  const resultScore = getResult(sa, sb);
 
-// ✅ score exact
-if (pa === sa && pb === sb) {
-  points = 3;
-}
-// ✅ bon résultat
-else if (resultPari === resultScore) {
-  points = 1;
+  // ✅ DEBUG
+  console.log("PARI:", pa, pb, resultPari);
+  console.log("SCORE:", sa, sb, resultScore);
+
+  // ✅ score exact
+  if (pa === sa && pb === sb) {
+    points = 3;
+  }
+  // ✅ bon résultat
+  else if (resultPari === resultScore) {
+    points = 1;
+  }
 }
 
 
