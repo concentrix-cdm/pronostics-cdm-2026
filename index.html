@@ -481,24 +481,26 @@ if (m.score_a !== null && m.score_b !== null) {
 // ✅ 👉 AJOUT ICI : calcul des points
 if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
 
-  let points = 0;
+ let points = 0;
 
-  const pa = predictions[m.id].pred_score_a;
-  const pb = predictions[m.id].pred_score_b;
+const pa = Number(predictions[m.id].pred_score_a);
+const pb = Number(predictions[m.id].pred_score_b);
 
-  const sa = m.score_a;
-  const sb = m.score_b;
+const sa = Number(m.score_a);
+const sb = Number(m.score_b);
 
-  // score exact
-  if (pa === sa && pb === sb) {
-    points = 3;
-  }
+// ✅ DEBUG
+console.log("PARI :", pa, pb, "| SCORE :", sa, sb);
 
-// ✅ bon résultat (gagnant / nul)
+// ✅ score exact
+if (pa === sa && pb === sb) {
+  points = 3;
+}
+// ✅ bon résultat
 else if (
-  (pa > pb && sa > sb) ||    // victoire A
-  (pa < pb && sa < sb) ||    // victoire B
-  (pa === pb && sa === sb)   // match nul
+  (pa > pb && sa > sb) ||   // victoire A
+  (pa < pb && sa < sb) ||   // victoire B
+  (pa === pb && sa === sb)  // nul
 ) {
   points = 1;
 }
