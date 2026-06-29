@@ -245,7 +245,51 @@ header {
   color: #0a2a66;
 }
 
+.announcement-bar {
+  background: #0a3c4f;
+  color: white;
+  padding: 10px 15px;
+  border-bottom: 3px solid #28e0c2;
+}
 
+.announcement-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.announcement-left img {
+  height: 60px;
+}
+
+.announcement-text {
+  flex: 1;
+}
+
+.annonce-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #28e0c2;
+}
+
+.annonce-body {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.highlight {
+  color: #28e0c2;
+  font-weight: bold;
+}
+
+.announcement-close {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+  
 .match-closed {
   text-align: center;
   color: white;
@@ -314,6 +358,30 @@ button:hover {
 
 <body>
 <header>
+
+  <div class="announcement-bar">
+  <div class="announcement-content">
+
+    <div class="announcement-left">
+      <img src="image.png" alt="illustration" />
+    </div>
+
+    <div class="announcement-text">
+      <div class="annonce-title">!! Attention, Attention !!</div>
+
+      <div class="annonce-body">
+        A partir des 16e de finale — 
+        le <span class="highlight">score retenu</span> sera celui 
+        à la fin des prolongations.
+      </div>
+    </div>
+
+    <span class="announcement-close" onclick="closeAnnouncement()">✖</span>
+
+  </div>
+</div>
+``
+  
   <div class="header-left">
     <img src="CNX_Reverse_RGB.png" class="logo-header">
   </div>
@@ -672,6 +740,8 @@ async function loadAdmin() {
   });
 }
 
+window.closeAnnouncement = function () {document.querySelector(".announcement-bar").style.display = "none";}; 
+  
 window.saveResult = async function(id){
   const a = document.getElementById("ra"+id).value;
   const b = document.getElementById("rb"+id).value;
