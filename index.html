@@ -45,6 +45,67 @@ body {
   margin-bottom: 15px; 
 }
 
+/* fond noir semi transparent */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* bloc principal */
+.popup-content {
+  background: #0a3c4f;
+  color: white;
+  padding: 40px;
+  border-radius: 15px;
+  width: 600px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* titre */
+.popup-header {
+  font-size: 28px;
+  font-weight: bold;
+  color: #28e0c2;
+  margin-bottom: 20px;
+}
+
+/* texte */
+.popup-body {
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+/* mise en valeur */
+.highlight {
+  color: #28e0c2;
+  font-weight: bold;
+}
+
+/* bouton */
+.popup-close {
+  margin-top: 30px;
+  padding: 10px 20px;
+  background: #28e0c2;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.popup-close:hover {
+  background: #1bb99c;
+}
 
   
 /* HEADER */
@@ -360,7 +421,7 @@ window.login = async function () {
   }
 };
   
-
+function closePopup() {document.getElementById("popup-annonce").style.display = "none";}
 window.logout = async function () {
   await supabase.auth.signOut();
   document.getElementById("app").style.display = "none";
@@ -673,6 +734,25 @@ supabase.auth.getUser().then(({data})=>{
 };
 
 </script>
+<div id="popup-annonce" class="popup-overlay">
+  <div class="popup-content">
+
+    <div class="popup-header">
+      ⚠️ Attention, Attention !
+    </div>
+
+    <div class="popup-body">
+      A partir des 16e de finale<br><br>
+      le <span class="highlight">score retenu</span> sera celui<br>
+      à la fin des prolongations.
+    </div>
+
+    <button onclick="closePopup()" class="popup-close">
+      Fermer
+    </button>
+
+  </div>
+</div>
 
 </body>
 </html>
