@@ -358,28 +358,7 @@ button:hover {
 
 <body>
 <header>
-
-<div class="announcement-bar">
-  <div class="announcement-content">
-
-    
-
-    <div class="announcement-text">
-      <div class="annonce-title">!! Attention, Attention !!</div>
-
-      <div class="annonce-body">
-        A partir des 16e de finale — 
-        le <span class="highlight">score retenu</span> sera celui 
-        à la fin des prolongations.
-      </div>
-    </div>
-
-    <span class="announcement-close" onclick="closeAnnouncement()">✖</span>
-
-  </div>
-</div>
-
-  
+ 
   <div class="header-left">
     <img src="CNX_Reverse_RGB.png" class="logo-header">
   </div>
@@ -739,6 +718,8 @@ await supabase.from("predictions").upsert(
 
 /* ✅ ADMIN */
 async function loadAdmin() {
+
+
   const { data } = await supabase.from("matches").select("*");
 
   const container = document.getElementById("admin");
