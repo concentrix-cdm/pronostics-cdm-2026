@@ -427,9 +427,7 @@ function showPopup() {
   document.getElementById("popup-annonce").style.display = "flex";
 }
 
-function closePopup() {
-  document.getElementById("popup-annonce").style.display = "none";
-}
+window.closePopup = function () {document.getElementById("popup-annonce").style.display = "none";};
 
 // ✅ logout
 window.logout = async function () {
