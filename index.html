@@ -7,7 +7,7 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 
 <style>
 body {
@@ -16,141 +16,14 @@ body {
   background: #f4f6fb;
 }
 
-
-.content {
-  padding-right: 20px;
-}
-
-
-.layout {
-  display: grid;
-  grid-template-columns: 420px 1fr; 
-  gap: 30px; 
-}
-
-.sidebar {
-  position: sticky;
-  top: 20px;
-}
-
-#classement div {
-  padding: 6px 0;
-  word-break: break-word;
-}
-
-
-.sidebar h3 {
-  text-align: center; 
-  text-decoration: underline; 
-  margin-bottom: 15px; 
-}
-
-/* fond noir semi transparent */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-/* bloc principal */
-.popup-content {
-  background: #0a3c4f;
-  color: white;
-  padding: 40px;
-  border-radius: 15px;
-  width: 600px;
-  max-width: 90%;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* titre */
-.popup-header {
-  font-size: 28px;
-  font-weight: bold;
-  color: #28e0c2;
-  margin-bottom: 20px;
-}
-
-/* texte */
-.popup-body {
-  font-size: 22px;
-  line-height: 1.5;
-}
-
-/* mise en valeur */
-.highlight {
-  color: #28e0c2;
-  font-weight: bold;
-}
-
-/* bouton */
-.popup-close {
-  margin-top: 30px;
-  padding: 10px 20px;
-  background: #28e0c2;
-  color: black;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.popup-close:hover {
-  background: #1bb99c;
-}
-
-  
 /* HEADER */
 
 header {
-  display: grid; 
-  grid-template-columns: 1fr auto 1fr; 
-  align-items: center;
   background: linear-gradient(90deg, #0a2a66, #6e2cff);
   color: white;
-  padding: 15px 20px;
-}
-
-/* gauche */
-.header-left {
-  justify-self: start;
-}
-
-/* centre */
-.header-center {
+  padding: 25px;
   text-align: center;
 }
-
-/* droite */
-.header-right {
-  justify-self: end;
-}
-
-/* logos */
-.logo-header {
-  height: 30px;
-}
-
-/* titre */
-.title {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-/* ballon */
-.ballon {
-  font-size: 26px;
-  margin: 0 5px;
-}
-
 
 .ballon {
   font-size: 60px;
@@ -162,10 +35,6 @@ header {
   font-weight: bold;
 }
 
-
-.logo-header {
-  height: 20px;
-}
 
 
 .logo {
@@ -196,7 +65,7 @@ header {
 
 /* MAIN */
 .container {
-  max-width: 1400px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
 }
@@ -314,21 +183,10 @@ button:hover {
 
 <body>
 <header>
-  <div class="header-left">
-    <img src="CNX_Reverse_RGB.png" class="logo-header">
-  </div>
-
-  <div class="header-center">
-    <span class="ballon">⚽</span>
-    <span class="title">Pronostics Coupe du Monde 2026</span>
-    <span class="ballon">⚽</span>
-  </div>
-
-  <div class="header-right">
-    <img src="CNX_Reverse_RGB.png" class="logo-header">
-  </div>
+  <span class="ballon">⚽</span>
+  <span class="title">Pronostics Coupe du Monde 2026</span>
+  <span class="ballon">⚽</span>
 </header>
-
 <div class="container">
 
 <div id="auth" class="auth-card">
@@ -350,43 +208,38 @@ button:hover {
 
 </div>
 
-<div id="app" style="display: none;">
 
-  <div class="layout">
+<div id="app" style="display:none;">
 
-    <!-- ✅ COLONNE GAUCHE : CLASSEMENT -->
-    <div class="sidebar">
-      <div class="card">
-        <h3>🏆 Classement LIVE</h3>
-        <div id="classement"></div>
-      </div>
-    </div>
+<div class="card">
+  <span id="welcome"></span>
+  <button onclick="logout()">Déconnexion</button>
+</div>
 
-    <!-- ✅ COLONNE DROITE : MATCHS -->
-    <div class="content">
-      <div class="card">
-        <span id="welcome"></span>
-        <button onclick="logout()">Déconnexion</button>
-      </div>
+<div class="card">
+  <h3>⚽ Matchs</h3>
+  <div id="matches"></div>
+</div>
 
-      <div class="card">
-        <h3>⚽ Matchs</h3>
-        <div id="matches"></div>
-      </div>
+<div class="card">
+  <h3>🏆 Classement LIVE</h3>
+  <div id="classement"></div>
+</div>
 
-      <div class="card admin" id="adminSection" style="display:none;">
-        <h3>🛠️ Mode Admin</h3>
-        <div id="admin"></div>
-      </div>
-    </div>
 
-  </div>
+<div class="card admin" id="adminSection" style="display:none;">
+  <h3>🛠️ Mode Admin (Résultats)</h3>
+  <div id="admin"></div>
+</div>
+
 
 </div>
 
-<script>
+</div>
 
-document.addEventListener("DOMContentLoaded", function () {
+<script defer>
+
+window.onload = function () {
 
 const supabase = window.supabase.createClient(
   "https://afgihkxtoeycgomnbjil.supabase.co",
@@ -421,20 +274,15 @@ window.login = async function () {
   }
 };
   
-function closePopup() {document.getElementById("popup-annonce").style.display = "none";}
-// ✅ popup functions (GLOBAL)
-function showPopup() {
-  document.getElementById("popup-annonce").style.display = "flex";
-}
 
-window.closePopup = function () {document.getElementById("popup-annonce").style.display = "none";};
-
-// ✅ logout
 window.logout = async function () {
   await supabase.auth.signOut();
   document.getElementById("app").style.display = "none";
   document.getElementById("auth").style.display = "block";
+
+
 };
+
 
 
 async function start() {
@@ -455,7 +303,6 @@ async function start() {
 
   // ✅ refresh classement
   setInterval(loadClassement, 5000);
-  showPopup();
 }
 
 async function loadPredictions() {
@@ -518,6 +365,10 @@ let html = `<div class="card">
   </div>
 `;
 
+if (predictions[m.id]) {
+  html += `...`;
+}
+
                                                      
 // ✅ 👉 AJOUT ICI
 if (predictions[m.id]) {
@@ -545,58 +396,11 @@ if (m.score_a !== null && m.score_b !== null) {
   `;
 }
 
-// ✅ 👉 AJOUT ICI : calcul des points
-if (predictions[m.id] && m.score_a !== null && m.score_b !== null) {
-
-let points = 0;
-
-// ✅ conversion propre
-const pa = parseInt(predictions[m.id].pred_score_a);
-const pb = parseInt(predictions[m.id].pred_score_b);
-
-const sa = parseInt(m.score_a);
-const sb = parseInt(m.score_b);
-
-if (isNaN(pa) || isNaN(pb) || isNaN(sa) || isNaN(sb)) {
-  console.log("Erreur données:", pa, pb, sa, sb);
-} else {
-
-  const resultPari = pa > pb ? "A" : pa < pb ? "B" : "N";
-  const resultScore = sa > sb ? "A" : sa < sb ? "B" : "N";
-
-  // ✅ DEBUG
-  console.log("PARI:", pa, pb, resultPari);
-  console.log("SCORE:", sa, sb, resultScore);
-
-  if (pa === sa && pb === sb) {
-    points = 3;
-  }
-  else if (resultPari === resultScore) {
-    points = 1;
-  }
-
-}
-
-
-  let label = "";
-  if (points === 3) label = "🎯 Score exact";
-  else if (points === 1) label = "✅ Bon résultat";
-  else label = "❌ Raté";
-
-  html += `
-    <div style="
-      margin-top:5px;
-      font-weight:bold;
-    ">
-      ${label} — +${points} pt${points > 1 ? 's' : ''}
-    </div>
-  `;
-}
 
     
 // ✅ ton code existant ensuite
 if (now >= start) {
- html += `<div class="match-closed">🔒 Pronostics fermés</div>`;
+ html += `<div class="match-closed">🔒 Match terminé</div>`;
 } else {
   html += `
     <div class="match-actions">
@@ -634,17 +438,15 @@ window.savePred = async function(id){
   }
 
   // ✅ UPSERT = remplace le pari existant
-
 await supabase.from("predictions").upsert(
   {
     user_id: user.id,
-    email: user.email,
     match_id: id,
     pred_score_a: Number(a),
     pred_score_b: Number(b)
   },
   {
-    onConflict: ["user_id", "match_id"]
+    onConflict: ["user_id", "match_id"] // ✅ TRÈS IMPORTANT
   }
 );
 
@@ -722,7 +524,7 @@ data.forEach((row, i) => {
 
   container.innerHTML += `
     <div class="${style}">
-     ${medal} ${i+1}. ${row.email} — ${row.score} pts
+      ${medal} ${i+1}. ${user.email} — ${row.score} pts
     </div>
   `;
 });
@@ -740,25 +542,6 @@ supabase.auth.getUser().then(({data})=>{
 };
 
 </script>
-<div id="popup-annonce" class="popup-overlay" style="display: none;">
-  <div class="popup-content">
-
-    <div class="popup-header">
-      ⚠️ Attention, Attention !
-    </div>
-
-    <div class="popup-body">
-      A partir des 16e de finale<br><br>
-      le <span class="highlight">score retenu</span> sera celui<br>
-      à la fin des prolongations.
-    </div>
-
-    <button onclick="closePopup()" class="popup-close">
-      Fermer
-    </button>
-
-  </div>
-</div>
 
 </body>
 </html>
