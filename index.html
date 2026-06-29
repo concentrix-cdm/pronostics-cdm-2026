@@ -427,6 +427,13 @@ window.logout = async function () {
   document.getElementById("app").style.display = "none";
   document.getElementById("auth").style.display = "block";
 
+function showPopup() {
+  document.getElementById("popup-annonce").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup-annonce").style.display = "none";
+}
 
 };
 
@@ -450,6 +457,7 @@ async function start() {
 
   // ✅ refresh classement
   setInterval(loadClassement, 5000);
+  showPopup();
 }
 
 async function loadPredictions() {
@@ -734,7 +742,7 @@ supabase.auth.getUser().then(({data})=>{
 };
 
 </script>
-<div id="popup-annonce" class="popup-overlay">
+<div id="popup-annonce" class="popup-overlay" style="display: none;">
   <div class="popup-content">
 
     <div class="popup-header">
