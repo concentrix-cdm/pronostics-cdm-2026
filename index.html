@@ -422,11 +422,7 @@ window.login = async function () {
 };
   
 function closePopup() {document.getElementById("popup-annonce").style.display = "none";}
-window.logout = async function () {
-  await supabase.auth.signOut();
-  document.getElementById("app").style.display = "none";
-  document.getElementById("auth").style.display = "block";
-
+// ✅ popup functions (GLOBAL)
 function showPopup() {
   document.getElementById("popup-annonce").style.display = "flex";
 }
@@ -435,8 +431,12 @@ function closePopup() {
   document.getElementById("popup-annonce").style.display = "none";
 }
 
+// ✅ logout
+window.logout = async function () {
+  await supabase.auth.signOut();
+  document.getElementById("app").style.display = "none";
+  document.getElementById("auth").style.display = "block";
 };
-
 
 
 async function start() {
